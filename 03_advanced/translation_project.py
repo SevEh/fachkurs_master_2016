@@ -11,51 +11,51 @@ class BioMolecule(object):
     @type mass: float
     """
     def __init__(self, id, name, mass=0.):
-        self._id = id
+        self.id = id
         self.name = name
         self.mass = mass
 
-   	    @property
-        def id(self):
-            print("getter")
-    		return self.__id
+    @property
+    def id(self):
+        print("getter")
+        return self.__id
 
-    	@id.setter
-    	def id(self, value):
-    		print("setter")
-    		if not isinstance(value, int):
-            	raise TypeError("id must be Integer.")
+    @id.setter
+    def id(self, value):
+        print("setter")
+        if not isinstance(value, int):
+            raise TypeError("id must be Integer.")
         self.__id = value
 
-    	@property
-    	def name(self):
-    		print("getter")
-    	    return self.__name
+    @property
+    def name(self):
+        print("getter")
+        return self.__name
 
-    	@name.setter
-    	def name(self, value):
-    		print("setter")
-    		if not isinstance(value, str):
-            	raise TypeError("Name must be String.")
+    @name.setter
+    def name(self, value):
+        print("setter")
+        if not isinstance(value, str):
+            raise TypeError("Name must be String.")
         self.__name = value
 
-    	@property
-    	def mass(self):
-    		print("getter")
-    	    return self.__mass
+    @property
+    def mass(self):
+        print("getter")
+        return self.__mass
 
-    	@mass.setter
-    	def mass(self, value):
-    		print("setter")
-    		if not isinstance(value, float):
-            	raise TypeError("Mass must be float.")
+    @mass.setter
+    def mass(self, value):
+        print("setter")
+        if not isinstance(value, float):
+            raise TypeError("Mass must be float.")
         self.__mass = value
 
 
 
 
 
-    	
+        
 
 
 class Polymer(BioMolecule):
@@ -70,10 +70,25 @@ class Polymer(BioMolecule):
     """
     def __init__(self, id, name, sequence, mass=0.):
         # 3. Initialize the parent class correctly
-        self._sequence = sequence
+        super().__init__(id, name, mass)
+        self.sequence = sequence
+
 
     
     # 4. Write getter and setter for sequence, again check for type
+
+    @property
+    def sequence(self):
+        print("getter")
+        return self.__sequence
+
+    @sequence.setter
+    def sequence(self, value):
+        print("setter")
+        if not isinstance(value, str):
+            raise TypeError("sequence must be string.")
+        self.__sequence = value
+
     # 5. run in ipython, instantiate this class, and test it
     def __getitem__(self, value):
         """
@@ -86,7 +101,11 @@ class Polymer(BioMolecule):
         """
          Enables changing of sequence characters via the indexing operators.       
         """
-        self.sequence[key] = value
+        if not isinstance(value, str):
+           raise TypeError("sequence must be string.")
+        a = list(self.sequence)
+        a[key] = value
+        self.sequence = "".join(a)
 
 
 class MRNA(Polymer):
